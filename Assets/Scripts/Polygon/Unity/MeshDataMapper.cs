@@ -12,7 +12,7 @@ namespace Polygon.Unity {
         var meshObject = new GameObject ("mesh");
 
         meshObject.transform.SetParent (parent);
-        meshObject.transform.position = chunk.Position * 32;
+        meshObject.transform.position = chunk.Position * 16;
         meshObject.AddComponent<MeshRenderer> ().material = material;
 
         var mesh = meshObject.AddComponent<MeshFilter> ().mesh;
