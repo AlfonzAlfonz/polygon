@@ -6,6 +6,7 @@ namespace Polygon.Terrain {
     public Vector3 top2;
     public Vector3 top3;
     public Vector3 top4;
+    public Vector3 top5;
 
     public Dimensions () {
       top1 = new Vector3 (1, 1, 1);

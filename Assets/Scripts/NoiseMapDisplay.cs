@@ -14,11 +14,12 @@ public class NoiseMapDisplay : MonoBehaviour {
 
 	void Update () {
 		var meshR = GetComponent<MeshRenderer> ();
+		Noise noise = new Noise(octaves.ToArray());
 
 		var texture = new Texture2D (width, height);
 		texture.filterMode = FilterMode.Point;
 		texture.wrapMode = TextureWrapMode.Clamp;
-		texture.SetPixels (NoiseMapToTexture (Noise.PerlinNoise (width, height, offset, octaves.ToArray())));
+		texture.SetPixels (NoiseMapToTexture (noise.PerlinNoise (width, height, offset)));
 		texture.Apply ();
 
 		meshR.sharedMaterial.mainTexture = texture;

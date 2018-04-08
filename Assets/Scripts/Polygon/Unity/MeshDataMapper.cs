@@ -1,34 +1,39 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Polygon.Mesh;
 using Polygon.Terrain;
 using UnityEngine;
 
 namespace Polygon.Unity {
-  class MeshDataMapper {
-    public static List<GameObject> MapToScene (Map map, Transform parent, Material material) {
-      var objects = new List<GameObject> ();
-      foreach (Chunk chunk in map.Chunks) {
-        var chunkMesh = new CubeMeshRenderer (chunk);
-        var meshObject = new GameObject ("mesh");
+  class MeshDataMapper : IMeshDataMapper {
 
-        meshObject.transform.SetParent (parent);
-        meshObject.transform.position = chunk.Position * 16;
-        meshObject.AddComponent<MeshRenderer> ().material = material;
+    public Transform Parent { get; set; }
 
-        var mesh = meshObject.AddComponent<MeshFilter> ().mesh;
-        MeshDataToMesh (mesh, chunkMesh.Map ());
-        meshObject.AddComponent<MeshCollider> ().sharedMesh = mesh;
+    public Material Material { get; set; }
 
-        objects.Add (meshObject);
-      }
-
-      return objects;
+    public MeshDataMapper (Transform parent, Material material) {
+      Parent = parent;
+      Material = material;
     }
 
-    public static void MeshDataToMesh (UnityEngine.Mesh mesh, MeshData data) {
-      mesh.vertices = data.Vertices.ToArray ();
-      mesh.triangles = data.Triangles.ToArray ();
-      mesh.uv = data.UV.ToArray ();
+    public MeshData GetMeshData(Chunk chunk) {
+      var chunkMesh = new CubeMeshRenderer (chunk);
+
+      return chunkMesh.Map();
+    }
+
+    public GameObject CreateObject(MeshData data, Chunk chunk) {
+      var chunkObject = new GameObject ("mesh");
+
+      chunkObject.transform.SetParent (Parent);
+      chunkObject.transform.position = chunk.Position * 16;
+
+      chunkObject.AddComponent<MeshRenderer> ().material = Material;
+
+      var mesh = chunkObject.AddComponent<MeshFilter> ().mesh.LoadData(data);
+      chunkObject.AddComponent<MeshCollider> ().sharedMesh = mesh;
+
+      return chunkObject;
     }
   }
 }

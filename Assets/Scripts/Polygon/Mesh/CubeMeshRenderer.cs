@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Polygon.Terrain;
 using UnityEngine;
 
@@ -27,14 +28,13 @@ namespace Polygon.Mesh {
           }
         }
       }
-
+      
       return Mesh;
     }
-
     void AddCube (int x, float y, int z, Surroundings s, Cube c) {
       if (s.Down) {
         primitives.RenderQuad (new Vector3 (x, y, z), new Vector3 (x + 1, y, z), new Vector3 (x, y, z + 1), new Vector3 (x + 1, y, z + 1));
-        AddUV2 ();
+        //AddUV2 ();
       }
       if (s.Up) {
         primitives.RenderQuad (
@@ -43,8 +43,8 @@ namespace Polygon.Mesh {
           new Vector3 (x + 1, y + c.Dimensions.top2.y, z),
           new Vector3 (x + 1, y + c.Dimensions.top4.y, z + 1)
         );
-        AddUV1 ();
-      } 
+        //AddUV1 ();
+      }
 
       if (s.East) {
         primitives.RenderQuad (
@@ -53,7 +53,7 @@ namespace Polygon.Mesh {
           new Vector3 (x + 1, y, z),
           new Vector3 (x + 1, y + c.Dimensions.top2.y, z)
         );
-        AddUV3 ();
+        //AddUV3 ();
       }
       if (s.West) {
         primitives.RenderQuad (
@@ -62,16 +62,16 @@ namespace Polygon.Mesh {
           new Vector3 (x, y + c.Dimensions.top3.y, z + 1),
           new Vector3 (x + 1, y + c.Dimensions.top4.y, z + 1)
         );
-        AddUV3 ();
+        //AddUV3 ();
       }
 
       if (s.South) {
         primitives.RenderQuad (new Vector3 (x, y, z), new Vector3 (x, y, z + 1), new Vector3 (x, y + c.Dimensions.top1.y, z), new Vector3 (x, y + c.Dimensions.top3.y, z + 1));
-        AddUV3 ();
+        //AddUV3 ();
       }
       if (s.North) {
         primitives.RenderQuad (new Vector3 (x + 1, y, z), new Vector3 (x + 1, y + c.Dimensions.top2.y, z), new Vector3 (x + 1, y, z + 1), new Vector3 (x + 1, y + c.Dimensions.top4.y, z + 1));
-        AddUV3 ();
+        //AddUV3 ();
       }
     }
 

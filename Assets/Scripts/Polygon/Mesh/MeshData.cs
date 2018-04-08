@@ -19,8 +19,8 @@ namespace Polygon.Mesh {
       Height = height;
       Depth = depth;
 
-      Vertices = new List<Vector3> (4 * 6 * width * height * depth);
-      UV = new List<Vector2> (4 * 6 * width * height * depth);
+      Vertices = new List<Vector3> (6 * 6 * width * height * depth);
+      UV = new List<Vector2> (6 * 6 * width * height * depth);
       Triangles = new List<int> (6 * 6 * width * height * depth);
     }
   }

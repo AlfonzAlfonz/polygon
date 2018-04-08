@@ -1,9 +1,9 @@
 using UnityEngine;
 
 namespace Polygon.Terrain.Generators {
-  class MapGenerator {
+  public class MapGenerator {
     public Cube[, , ] Generate (float[, ] noisemap, Chunk chunk) {
-      var cubes = new Cube[noisemap.GetLength (0) - 1, 100, noisemap.GetLength (1) - 1];
+      var cubes = new Cube[noisemap.GetLength (0) - 1, 300, noisemap.GetLength (1) - 1];
 
       for (int x = 0; x < cubes.GetLength (0); x++) {
         for (int z = 0; z < cubes.GetLength (2); z++) {
@@ -22,7 +22,7 @@ namespace Polygon.Terrain.Generators {
     }
 
     private float Accelerate (float value) {
-      return value * 100f - 30;
+      return value * 300f - 100;
     }
 
     private float GetHeight (float[, ] noisemap, int x, int z) {
