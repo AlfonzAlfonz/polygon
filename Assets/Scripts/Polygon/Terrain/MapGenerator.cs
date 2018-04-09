@@ -1,7 +1,7 @@
 using UnityEngine;
 
-namespace Polygon.Terrain.Generators {
-  public class MapGenerator {
+namespace Polygon.Terrain {
+  public class CubeMapper {
     public Cube[, , ] Generate (float[, ] noisemap, Chunk chunk) {
       var cubes = new Cube[noisemap.GetLength (0) - 1, 300, noisemap.GetLength (1) - 1];
 

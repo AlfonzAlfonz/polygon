@@ -1,9 +1,9 @@
 using Polygon.Mesh;
+using Polygon.Terrain;
 using UnityEngine;
 
-namespace Polygon.Terrain {
+namespace Polygon {
   public interface IMeshDataMapper {
-    MeshData GetMeshData (Chunk chunk);
     GameObject CreateObject (MeshData data, Chunk chunk);
   }
 }

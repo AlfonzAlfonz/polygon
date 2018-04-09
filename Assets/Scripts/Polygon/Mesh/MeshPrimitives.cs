@@ -12,12 +12,8 @@ namespace Polygon.Mesh {
 
     public void RenderQuad (Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4) {
       int vOffset = Mesh.Vertices.Count;
-      AddTriangleVertices (p1, p2, p3);
-      AddTriangleTriangles (vOffset);
-
-      vOffset = Mesh.Vertices.Count;
-      AddTriangleVertices (p4, p3, p2);
-      AddTriangleTriangles (vOffset);
+      AddQuadVertices (p1, p2, p3, p4);
+      AddQuadTriangles(vOffset);
     }
 
     public void AddQuadVertices (Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4) {
@@ -36,8 +32,14 @@ namespace Polygon.Mesh {
       Mesh.Triangles.Add (vOffset + 1);
     }
 
-    public void RenderTerrainQuad (Dimensions dimensions) {
+    public void RenderTerrainQuad (Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4) {
+      int vOffset = Mesh.Vertices.Count;
+      AddTriangleVertices (p1, p2, p3);
+      AddTriangleTriangles (vOffset);
 
+      vOffset = Mesh.Vertices.Count;
+      AddTriangleVertices (p4, p3, p2);
+      AddTriangleTriangles (vOffset);
     }
 
     public void AddTerrainQuadVertices (Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4) {

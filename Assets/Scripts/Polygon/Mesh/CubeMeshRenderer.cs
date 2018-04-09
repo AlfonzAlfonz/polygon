@@ -9,28 +9,33 @@ namespace Polygon.Mesh {
 
     public MeshData Mesh { get; set; }
 
+    public float Scale { get; set; }
+
     MeshPrimitives primitives;
 
-    public CubeMeshRenderer (Chunk chunk) {
+    public CubeMeshRenderer (float scale) {
+      Scale = scale;
+
+    }
+
+    public MeshData Map (Chunk chunk) {
       Chunk = chunk;
       Mesh = new MeshData (chunk.Cubes.GetLength (0), chunk.Cubes.GetLength (1), chunk.Cubes.GetLength (2));
       primitives = new MeshPrimitives (Mesh);
-    }
 
-    public MeshData Map () {
       for (int y = 0; y < Mesh.Height; y++) {
         for (int x = 0; x < Mesh.Width; x++) {
           for (int z = 0; z < Mesh.Depth; z++) {
             if (Chunk.Cubes[x, y, z] != null) {
-              AddCube (x, y, z, ShouldRender (Chunk.Cubes, y, x, z), Chunk.Cubes[x, y, z]);
+              AddCube (x * Scale, y * Scale, z * Scale, ShouldRender (Chunk.Cubes, y, x, z), Chunk.Cubes[x, y, z]);
             }
           }
         }
       }
-      
+
       return Mesh;
     }
-    void AddCube (int x, float y, int z, Surroundings s, Cube c) {
+    void AddCube (float x, float y, float z, Surroundings s, Cube c) {
       if (s.Down) {
         primitives.RenderQuad (new Vector3 (x, y, z), new Vector3 (x + 1, y, z), new Vector3 (x, y, z + 1), new Vector3 (x + 1, y, z + 1));
         //AddUV2 ();

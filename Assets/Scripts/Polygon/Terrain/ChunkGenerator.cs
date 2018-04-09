@@ -2,13 +2,13 @@ using Polygon.Terrain.Generators;
 using UnityEngine;
 
 namespace Polygon.Terrain {
-  class ChunkGenerator {
+  public class ChunkGenerator {
 
-    MapGenerator Generator { get; set; }
+    CubeMapper Mapper { get; set; }
     Noise.Noise Noise { get; set; }
 
-    public ChunkGenerator (MapGenerator generator, Noise.Noise noise) {
-      Generator = generator;
+    public ChunkGenerator (CubeMapper mapper, Noise.Noise noise) {
+      Mapper = mapper;
       Noise = noise;
     }
 
@@ -16,7 +16,7 @@ namespace Polygon.Terrain {
       Chunk chunk = new Chunk (grid);
       chunk.Position = position;
 
-      chunk.Cubes = Generator.Generate (Noise.PerlinNoise (grid + 1, grid + 1, new Vector2 (position.x * grid, position.z * grid)), chunk);
+      chunk.Cubes = Mapper.Generate (Noise.PerlinNoise (grid + 1, grid + 1, new Vector2 (position.x * grid, position.z * grid)), chunk);
 
       return chunk;
     }

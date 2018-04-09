@@ -10,18 +10,14 @@ namespace Polygon.Unity {
 
     public Material Material { get; set; }
 
+    public IChunkMeshRenderer Renderer { get; set; }
+
     public MeshDataMapper (Transform parent, Material material) {
       Parent = parent;
       Material = material;
     }
 
-    public MeshData GetMeshData(Chunk chunk) {
-      var chunkMesh = new CubeMeshRenderer (chunk);
-
-      return chunkMesh.Map();
-    }
-
-    public GameObject CreateObject(MeshData data, Chunk chunk) {
+    public GameObject CreateObject (MeshData data, Chunk chunk) {
       var chunkObject = new GameObject ("mesh");
 
       chunkObject.transform.SetParent (Parent);
@@ -29,7 +25,7 @@ namespace Polygon.Unity {
 
       chunkObject.AddComponent<MeshRenderer> ().material = Material;
 
-      var mesh = chunkObject.AddComponent<MeshFilter> ().mesh.LoadData(data);
+      var mesh = chunkObject.AddComponent<MeshFilter> ().mesh.LoadData (data);
       //chunkObject.AddComponent<MeshCollider> (). = mesh;
 
       return chunkObject;

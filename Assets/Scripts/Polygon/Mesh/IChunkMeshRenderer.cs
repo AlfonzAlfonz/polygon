@@ -1,5 +1,7 @@
+using Polygon.Terrain;
+
 namespace Polygon.Mesh {
-  interface IChunkMeshRenderer {
-    
+  public interface IChunkMeshRenderer {
+    MeshData Map (Chunk chunk);
   }
 }

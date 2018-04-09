@@ -1,8 +1,8 @@
 using Polygon.Mesh;
 using Polygon.Terrain;
 
-namespace Polygon.Unity {
-  struct MeshDataChunk {
+namespace Polygon.Thread {
+  public struct MeshDataChunk {
     public Chunk chunk;
     public MeshData data;
 
