@@ -2,28 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Polygon;
 using Polygon.Mesh;
 using Polygon.Noise;
 using Polygon.Terrain;
 using Polygon.Terrain.Generators;
+using Polygon.Thread;
 using Polygon.Unity;
 using UnityEngine;
 
-public class MeshFactory : MonoBehaviour {
-
-  MeshRenderer meshR;
-
-  List<GameObject> objects;
-
-  Map map;
+public class MeshTerrain : MonoBehaviour {
 
   public int grid;
 
-  Queue<MeshDataChunk> renderQueue;
-
-  MeshDataMapper mapper;
+  MeshRenderer meshR;
+  List<GameObject> objects;
+  Map map;
+  ChunkMapThread chunkRenderer;
+  IMeshDataMapper mapper;
 
   Octave[] octaves = new Octave[] {
     new Octave () {
@@ -61,39 +57,46 @@ public class MeshFactory : MonoBehaviour {
   void Awake () {
     Debug.Log ("Start awake");
     meshR = GetComponent<MeshRenderer> ();
-    renderQueue = new Queue<MeshDataChunk> ();
     mapper = new MeshDataMapper (this.transform, meshR.material);
+    chunkRenderer = new ChunkMapThread (
+      16,
+      new ChunkGenerator (
+        new MapGenerator (),
+        new Noise (octaves)
+      ),
+      mapper
+    );
+
     Debug.Log ("End awake");
   }
 
   // Use this for initialization
   void Start () {
     Debug.Log ("Start start");
-    map = new Map (grid, new MapGenerator (), new Noise (octaves));
+    map = new Map (grid);
+    chunkRenderer.Start ();
 
     for (int x = 0; x < 10; x++) {
       for (int z = 0; z < 10; z++) {
         for (int y = 0; y < 1; y++) {
-          AddAndRenderChunk (new Vector3 (x, y, z));
+          chunkRenderer.RenderChunk (new Vector3 (x, y, z));
         }
       }
     }
     Debug.Log ("End start");
   }
 
-  void AddAndRenderChunk (Vector3 position) {
-    Task.Run (() => {
-      Chunk chunk = map.AddChunk (position);
-      MeshData data = mapper.GetMeshData (chunk);
-
-      renderQueue.Enqueue (new MeshDataChunk (chunk, data));
-    });
-  }
-
   void Update () {
-    if (renderQueue.Count != 0) {
-      MeshDataChunk mc = renderQueue.Dequeue ();
+    if (chunkRenderer.Results.Count != 0) {
+      MeshDataChunk mc;
+      lock (chunkRenderer.Results) {
+        mc = chunkRenderer.Results.Dequeue ();
+      }
       mapper.CreateObject (mc.data, mc.chunk);
     }
+  }
+
+  void OnApplicationQuit () {
+    chunkRenderer.Stop ();
   }
 }

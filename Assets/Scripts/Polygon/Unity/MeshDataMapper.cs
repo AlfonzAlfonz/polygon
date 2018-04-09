@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Polygon.Mesh;
 using Polygon.Terrain;
 using UnityEngine;
@@ -31,7 +30,7 @@ namespace Polygon.Unity {
       chunkObject.AddComponent<MeshRenderer> ().material = Material;
 
       var mesh = chunkObject.AddComponent<MeshFilter> ().mesh.LoadData(data);
-      chunkObject.AddComponent<MeshCollider> ().sharedMesh = mesh;
+      //chunkObject.AddComponent<MeshCollider> (). = mesh;
 
       return chunkObject;
     }

@@ -559,7 +559,7 @@ PlayerSettings:
   scriptingBackend: {}
   incrementalIl2cppBuild: {}
   additionalIl2CppArgs: 
-  scriptingRuntimeVersion: 1
+  scriptingRuntimeVersion: 0
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
@@ -638,7 +638,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: c1041a04-d40d-418f-b34d-194b4de36a30
   projectName: Polygon3D
   organizationId: unity_3rozw4pkbsb_nq
