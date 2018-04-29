@@ -8,12 +8,12 @@ using UnityEngine;
 namespace Polygon.Unity {
   public static class DependencyContainerExtender {
     public static void CreateForUnity (this DependencyContainer container, int grid, float scale, Transform parent, Material material, Octave[] octaves) {
-      container.MeshDataMapper = new MeshDataMapper (parent, material);
+      container.MeshDataMapper = new MeshDataMapper (parent, material, grid, scale);
       container.CubeMapper = new CubeMapper ();
       container.Noise = new Noise.Noise (octaves);
-      container.ChunkMeshRenderer = new CubeMeshRenderer (scale);
+      container.ChunkMeshRenderer = new FlatMeshRenderer ();
       container.ChunkGenerator = new ChunkGenerator (container.CubeMapper, container.Noise);
-      container.ChunkThread = new ChunkThread (grid, container.ChunkGenerator, container.ChunkMeshRenderer);
+      container.ChunkThread = new ChunkThread (grid,scale, container.ChunkGenerator, container.ChunkMeshRenderer);
     }
   }
 }

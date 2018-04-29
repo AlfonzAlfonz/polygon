@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Polygon.Mesh {
+namespace Polygon.Mesh.Model {
   public class MeshData {
     public int Width { get; private set; }
     public int Height { get; private set; }

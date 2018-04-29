@@ -1,5 +1,5 @@
-using Polygon.Mesh;
-using Polygon.Terrain;
+using Polygon.Mesh.Model;
+using Polygon.Terrain.Model;
 using UnityEngine;
 
 namespace Polygon {

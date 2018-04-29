@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Polygon.Terrain {
+namespace Polygon.Terrain.Model {
   public class Dimensions {
     public Vector3 top1;
     public Vector3 top2;

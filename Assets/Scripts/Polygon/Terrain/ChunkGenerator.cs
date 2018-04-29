@@ -1,4 +1,4 @@
-using Polygon.Terrain.Generators;
+using Polygon.Terrain.Model;
 using UnityEngine;
 
 namespace Polygon.Terrain {

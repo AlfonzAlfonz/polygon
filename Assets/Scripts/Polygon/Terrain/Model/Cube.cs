@@ -1,4 +1,5 @@
-namespace Polygon.Terrain {
+using Polygon.Terrain.Model;
+namespace Polygon.Terrain.Model {
   public class Cube {
 
     public Chunk Chunk { get; set; }

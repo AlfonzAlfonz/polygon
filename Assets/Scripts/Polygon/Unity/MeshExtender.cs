@@ -1,4 +1,5 @@
 using Polygon.Mesh;
+using Polygon.Mesh.Model;
 
 namespace Polygon.Unity {
   public static class MeshExtender {
@@ -6,7 +7,7 @@ namespace Polygon.Unity {
       mesh.vertices = data.Vertices.ToArray ();
       mesh.triangles = data.Triangles.ToArray ();
       mesh.uv = data.UV.ToArray ();
-
+      
       mesh.RecalculateNormals ();
 
       return mesh;

@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Polygon.Mesh;
+using Polygon.Mesh.Model;
 using Polygon.Terrain;
+using Polygon.Terrain.Model;
 using UnityEngine;
 
 namespace Polygon.Thread {
@@ -16,13 +19,15 @@ namespace Polygon.Thread {
     Queue<Vector3> tasks;
 
     int grid;
+    float scale;
 
     public Queue<MeshDataChunk> Results { get; private set; }
 
-    public ChunkThread (int grid, ChunkGenerator generator, IChunkMeshRenderer renderer) {
+    public ChunkThread (int grid, float scale, ChunkGenerator generator, IChunkMeshRenderer renderer) {
       this.generator = generator;
       this.renderer = renderer;
       this.grid = grid;
+      this.scale = scale;
       Results = new Queue<MeshDataChunk> ();
       tasks = new Queue<Vector3> ();
       thread = new System.Threading.Thread (ThreadMethod);
@@ -50,9 +55,10 @@ namespace Polygon.Thread {
             task = tasks.Dequeue ();
           }
           Chunk chunk = generator.CreateChunk (grid, task);
-          MeshData data = renderer.Map (chunk);
+          MeshData data = renderer.Map (chunk, scale);
 
           Results.Enqueue (new MeshDataChunk (chunk, data));
+          GC.Collect();
         }
 
         System.Threading.Thread.Sleep (1);

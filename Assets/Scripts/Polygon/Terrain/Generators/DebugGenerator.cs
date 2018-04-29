@@ -1,3 +1,5 @@
+using Polygon.Terrain.Model;
+
 namespace Polygon.Terrain.Generators {
   public class DebugGenerator {
     public Chunk Generate (int size, Chunk chunk) {

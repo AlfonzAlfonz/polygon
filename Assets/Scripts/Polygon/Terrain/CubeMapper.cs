@@ -1,3 +1,4 @@
+using Polygon.Terrain.Model;
 using UnityEngine;
 
 namespace Polygon.Terrain {
@@ -31,9 +32,9 @@ namespace Polygon.Terrain {
 
     private Vector3 GetPoint (float value, int h) {
       var dim = Accelerate (value) - h;
-      if (dim > 1) {
+      if (dim > .8f) {
         dim = 1;
-      } else if (dim < 0) {
+      } else if (dim < .2f) {
         dim = 0;
       }
       return new Vector3 (0, dim, 0);

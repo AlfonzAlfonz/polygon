@@ -1,5 +1,6 @@
 using Polygon.Mesh;
-using Polygon.Terrain;
+using Polygon.Mesh.Model;
+using Polygon.Terrain.Model;
 
 namespace Polygon.Thread {
   public struct MeshDataChunk {

@@ -9,16 +9,20 @@ public class NoiseMapDisplay : MonoBehaviour {
 	public int height;
 
 	public Vector2 offset;
-	
+
 	public List<Octave> octaves;
+	Texture2D texture;
+
+	void Start () {
+		texture = new Texture2D (width, height);
+
+		texture.filterMode = FilterMode.Point;
+		texture.wrapMode = TextureWrapMode.Clamp;
+	}
 
 	void Update () {
 		var meshR = GetComponent<MeshRenderer> ();
-		Noise noise = new Noise(octaves.ToArray());
-
-		var texture = new Texture2D (width, height);
-		texture.filterMode = FilterMode.Point;
-		texture.wrapMode = TextureWrapMode.Clamp;
+		Noise noise = new Noise (octaves.ToArray ());
 		texture.SetPixels (NoiseMapToTexture (noise.PerlinNoise (width, height, offset)));
 		texture.Apply ();
 

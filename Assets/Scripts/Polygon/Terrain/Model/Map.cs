@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using Polygon.Noise;
-using Polygon.Terrain.Generators;
 using UnityEngine;
 
-namespace Polygon.Terrain {
+namespace Polygon.Terrain.Model {
   public class Map {
     public List<Chunk> Chunks { get; private set; }
     int Grid { get; set; }

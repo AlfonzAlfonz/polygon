@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1721bd7bc6ff23a449cb7a9427ca1d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  speed: 1
 --- !u!23 &1357779373
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -305,7 +305,7 @@ MonoBehaviour:
       horizontalAngle: 360
       verticalAngle: 85
       maxScroolZoom: 30
-      speedScroolZoom: 0.5
+      speedScroolZoom: 1
       rotateWhenClick: 1
       keyToRotate: mouse 0
     followPlayer:
@@ -581,6 +581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: 16
+  scale: 1
 --- !u!23 &2138911307
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -623,7 +624,7 @@ Transform:
   m_GameObject: {fileID: 2138911305}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2

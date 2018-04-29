@@ -7,6 +7,7 @@ using Polygon.Mesh;
 using Polygon.Noise;
 using Polygon.Terrain;
 using Polygon.Terrain.Generators;
+using Polygon.Terrain.Model;
 using Polygon.Thread;
 using Polygon.Unity;
 using UnityEngine;
@@ -41,17 +42,22 @@ public class MeshTerrain : MonoBehaviour {
     persistance = 1.3f,
     lacunarity = 1.6f
     },
+    new Octave () {
+    offset = new Vector2 (),
+    frequency = 10f,
+    amplitude = .01f,
+    suboctaves = 4,
+    persistance = 1.3f,
+    lacunarity = 1.6f
+    },
   };
 
   MeshRenderer meshR;
-  Map map;
-
   DependencyContainer container;
 
   void Awake () {
     Debug.Log ("Start awake");
     meshR = GetComponent<MeshRenderer> ();
-    map = new Map (grid);
     container = new DependencyContainer ();
     container.CreateForUnity (grid, scale, this.transform, meshR.material, octaves);
 
@@ -60,6 +66,7 @@ public class MeshTerrain : MonoBehaviour {
 
   // Use this for initialization
   void Start () {
+    GC.Collect();
     Debug.Log ("Start start");
     container.ChunkThread.Start ();
 
