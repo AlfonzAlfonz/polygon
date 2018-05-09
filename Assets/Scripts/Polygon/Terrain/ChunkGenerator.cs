@@ -1,24 +1,22 @@
+using System.Collections.Generic;
 using Polygon.Terrain.Model;
 using UnityEngine;
 
 namespace Polygon.Terrain {
-  public class ChunkGenerator {
+  public class ChunkGenerator : IChunkGenerator {
+    public QuadMapper Mapper { get; set; }
+    public Noise.Noise Noise { get; set; }
 
-    CubeMapper Mapper { get; set; }
-    Noise.Noise Noise { get; set; }
-
-    public ChunkGenerator (CubeMapper mapper, Noise.Noise noise) {
+    public ChunkGenerator (QuadMapper mapper, Noise.Noise noise) {
       Mapper = mapper;
       Noise = noise;
     }
 
-    public Chunk CreateChunk (int grid, Vector3 position) {
-      Chunk chunk = new Chunk (grid);
-      chunk.Position = position;
-
-      chunk.Cubes = Mapper.Generate (Noise.PerlinNoise (grid + 1, grid + 1, new Vector2 (position.x * grid, position.z * grid)), chunk);
-
-      return chunk;
+    public void CreateChunk (Chunk chunk) {
+      Mapper.Map (
+        Noise.PerlinNoise (chunk.Grid + 1, chunk.Grid + 1, chunk.AbsolutePosition),
+        chunk
+      );
     }
   }
 }

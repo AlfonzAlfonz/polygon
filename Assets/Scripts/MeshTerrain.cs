@@ -6,17 +6,21 @@ using Polygon;
 using Polygon.Mesh;
 using Polygon.Noise;
 using Polygon.Terrain;
-using Polygon.Terrain.Generators;
 using Polygon.Terrain.Model;
-using Polygon.Thread;
 using Polygon.Unity;
 using UnityEngine;
 
 public class MeshTerrain : MonoBehaviour {
 
-  // Config
   public int grid;
   public float scale;
+
+  public Transform player;
+
+  public Material material;
+
+  public Mesh mesh;
+
   Octave[] octaves = new Octave[] {
     new Octave () {
     offset = new Vector2 (),
@@ -29,7 +33,7 @@ public class MeshTerrain : MonoBehaviour {
     new Octave () {
     offset = new Vector2 (),
     frequency = 2f / 100f,
-    amplitude = 1f,
+    amplitude = 5f,
     suboctaves = 4,
     persistance = 1.3f,
     lacunarity = 1.6f
@@ -37,7 +41,7 @@ public class MeshTerrain : MonoBehaviour {
     new Octave () {
     offset = new Vector2 (),
     frequency = 5f / 10f,
-    amplitude = .03f,
+    amplitude = .3f,
     suboctaves = 4,
     persistance = 1.3f,
     lacunarity = 1.6f
@@ -55,42 +59,28 @@ public class MeshTerrain : MonoBehaviour {
   MeshRenderer meshR;
   DependencyContainer container;
 
-  void Awake () {
-    Debug.Log ("Start awake");
-    meshR = GetComponent<MeshRenderer> ();
-    container = new DependencyContainer ();
-    container.CreateForUnity (grid, scale, this.transform, meshR.material, octaves);
+  Map map;
+  ChunkGenerator generator;
 
-    Debug.Log ("End awake");
+  GameObjectGenerator gameObjectGenerator;
+
+  void Awake () {
+    generator = new ChunkGenerator(new QuadMapper(), new Noise(octaves));
+    gameObjectGenerator = new GameObjectGenerator(new PlaneMeshGenerator(scale), this.transform, material);
+    gameObjectGenerator.mesh = mesh;
+    map = new Map(grid, 20, generator, gameObjectGenerator);
+    map.player = player;
   }
 
-  // Use this for initialization
   void Start () {
     GC.Collect();
-    Debug.Log ("Start start");
-    container.ChunkThread.Start ();
 
-    for (int x = 0; x < 20; x++) {
-      for (int z = 0; z < 20; z++) {
-        for (int y = 0; y < 1; y++) {
-          container.ChunkThread.RenderChunk (new Vector3 (x, y, z));
-        }
-      }
-    }
-    Debug.Log ("End start");
   }
 
   void Update () {
-    if (container.ChunkThread.Results.Count != 0) {
-      MeshDataChunk mc;
-      lock (container.ChunkThread.Results) {
-        mc = container.ChunkThread.Results.Dequeue ();
-      }
-      container.MeshDataMapper.CreateObject (mc.data, mc.chunk);
-    }
+    map.Update();
   }
 
   void OnApplicationQuit () {
-    container.ChunkThread.Stop ();
   }
 }

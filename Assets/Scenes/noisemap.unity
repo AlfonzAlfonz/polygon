@@ -148,11 +148,11 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   octaves:
   - offset: {x: 0, y: 0}
-    frequency: 5
+    frequency: 1
     amplitude: 1
-    suboctaves: 4
-    persistance: 2
-    lacunarity: 2
+    suboctaves: 1
+    persistance: 0.58
+    lacunarity: 3
     blendMethod: 0
 --- !u!23 &231151872
 MeshRenderer:
