@@ -10,6 +10,8 @@ namespace Polygon.Unity.HeightMap {
       get {
         if (texture == null || texture.width != width || texture.height != height) {
           texture = new Texture2D (width, height);
+          texture.filterMode = FilterMode.Point;
+          texture.wrapMode = TextureWrapMode.Clamp;
         }
         return texture;
       }
@@ -21,7 +23,8 @@ namespace Polygon.Unity.HeightMap {
 
     public void ApplyTexture () {
       UpdateTexture (Texture);
-      GetComponent<MeshRenderer> ().sharedMaterial.mainTexture = Texture;
+      var renderer = GetComponent<MeshRenderer> ();
+      renderer.sharedMaterial.mainTexture = Texture;
     }
 
     public void UpdateTexture (Texture2D texture, int? width = null, int? height = null) {

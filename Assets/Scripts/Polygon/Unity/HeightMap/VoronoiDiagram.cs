@@ -11,8 +11,10 @@ namespace Polygon.Unity.HeightMap {
 
     public FastNoise.CellularReturnType returnType;
 
+    public FastNoise.CellularDistanceFunction distanceFunction;
+
     public override float[, ] GetHeightMap (int width, int height) {
-      var noise = new Voronoi (frequency, returnType);
+      var noise = new Voronoi (frequency, returnType, distanceFunction);
 
       return noise.HeigthMap (width, height, offset);
     }

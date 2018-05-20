@@ -9,9 +9,12 @@ namespace Polygon.Noise {
 
     public CellularReturnType ReturnType { get; set; }
 
-    public Voronoi (float frequency, CellularReturnType returnType) { 
+    public CellularDistanceFunction DistanceFunction { get; set; }
+
+    public Voronoi (float frequency, CellularReturnType returnType, CellularDistanceFunction distanceFunction) {
       Frequency = frequency;
       ReturnType = returnType;
+      DistanceFunction = distanceFunction;
     }
 
     public float[, ] HeigthMap (int width, int height, Vector2 offset) {
@@ -19,12 +22,13 @@ namespace Polygon.Noise {
 
       var noise = new FastNoise ();
       noise.SetNoiseType (FastNoise.NoiseType.Cellular);
-      noise.SetFrequency (.02f);
-      noise.SetCellularReturnType (CellularReturnType.CellValue);
+      noise.SetFrequency (Frequency);
+      noise.SetCellularReturnType (ReturnType);
+      noise.SetCellularDistanceFunction(DistanceFunction);
 
       for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
-          map[x, y] = noise.GetNoise (x + offset.x, y + offset.y);
+          map[x, y] = noise.GetNoise ((x + offset.x) / width, (y + offset.y) / height);
         }
       }
 
