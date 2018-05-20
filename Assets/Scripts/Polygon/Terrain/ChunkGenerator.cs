@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Polygon.Terrain.Model;
 using UnityEngine;
 
@@ -13,10 +14,14 @@ namespace Polygon.Terrain {
     }
 
     public void CreateChunk (Chunk chunk) {
-      Mapper.Map (
-        Noise.PerlinNoise (chunk.Grid + 1, chunk.Grid + 1, chunk.AbsolutePosition),
-        chunk
-      );
+      var task = new Task (() => {
+        Mapper.Map (
+          Noise.PerlinNoise (chunk.Grid + 1, chunk.Grid + 1, chunk.AbsolutePosition),
+          chunk
+        );
+      });
+      chunk.MakeTask = task;
+      task.Start();
     }
   }
 }

@@ -1,23 +1,19 @@
-using UnityEngine;
 using System;
+using System.Threading.Tasks;
+using UnityEngine;
 
-namespace Polygon.Terrain.Model
-{
-  public class Chunk
-  {
-    public Quad[,] Quads { get; set; }
+namespace Polygon.Terrain.Model {
+  public class Chunk {
+    public Quad[, ] Quads { get; set; }
 
     public GameObject GameObject { get; set; }
 
-    float[,] heightMap;
-    public float[,] HeightMap
-    {
+    float[, ] heightMap;
+    public float[, ] HeightMap {
       get { return heightMap; }
-      set
-      {
-        if (value.GetLength(0) != Grid + 1 || value.GetLength(1) != Grid + 1)
-        {
-          throw new ArgumentException();
+      set {
+        if (value.GetLength (0) != Grid + 1 || value.GetLength (1) != Grid + 1) {
+          throw new ArgumentException ();
         }
         heightMap = value;
       }
@@ -31,8 +27,9 @@ namespace Polygon.Terrain.Model
 
     public bool Active { get; set; }
 
-    public Chunk(Vector2 position, int grid)
-    {
+    public Task MakeTask { get; set; }
+
+    public Chunk (Vector2 position, int grid) {
       Grid = grid;
       Active = false;
       Position = position;

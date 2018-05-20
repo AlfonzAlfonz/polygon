@@ -10,18 +10,11 @@ namespace Polygon.Noise {
 
     public float amplitude;
 
+    [Range(0, 10)]
     public int suboctaves = 1;
 
     public float persistance = 2;
 
     public float lacunarity = 2;
-
-    public BlendMethod blendMethod = BlendMethod.Add;
-  }
-
-  public enum BlendMethod   {
-    Add,
-    Subtract,
-    Multiply,
   }
 }

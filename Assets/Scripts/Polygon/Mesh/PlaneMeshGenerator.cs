@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Polygon.Mesh.Model;
 using Polygon.Terrain.Model;
 using UnityEngine;
@@ -13,7 +15,7 @@ namespace Polygon.Mesh {
 
     private Vector3 GetVector (float[, ] map, int x, int y) => new Vector3 (x, map[x, y] * 500 - 200, y);
 
-    public MeshData CreateMesh (Chunk chunk) {
+    public Task<MeshData> CreateMesh (Chunk chunk) => new Task<MeshData> (() => {
       MeshData mesh = new MeshData (chunk.Grid, chunk.Grid, 1);
       MeshPrimitives primitives = new MeshPrimitives (mesh);
 
@@ -29,6 +31,6 @@ namespace Polygon.Mesh {
       }
 
       return mesh;
-    }
+    });
   }
 }

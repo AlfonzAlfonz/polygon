@@ -37,23 +37,7 @@ public class MeshTerrain : MonoBehaviour {
     suboctaves = 4,
     persistance = 1.3f,
     lacunarity = 1.6f
-    },
-    new Octave () {
-    offset = new Vector2 (),
-    frequency = 5f / 10f,
-    amplitude = .3f,
-    suboctaves = 4,
-    persistance = 1.3f,
-    lacunarity = 1.6f
-    },
-    new Octave () {
-    offset = new Vector2 (),
-    frequency = 10f,
-    amplitude = .01f,
-    suboctaves = 4,
-    persistance = 1.3f,
-    lacunarity = 1.6f
-    },
+    }
   };
 
   MeshRenderer meshR;

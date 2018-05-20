@@ -9,6 +9,7 @@ namespace Polygon.Noise {
     public Noise (Octave[] octaves) {
       Octaves = octaves;
     }
+    
     public float[, ] PerlinNoise (int width, int height, Vector2 offset) {
       var map = new float[width, height];
 
@@ -32,7 +33,7 @@ namespace Polygon.Noise {
               var pY = ((float) y + offset.y + Octaves[0].offset.y) * (frequency / height);
 
               //value += Mathf.PerlinNoise (pX, pY) * amplitude;
-              value += (noise.GetNoise (pX * width, pY * height) + 1) / 2 * amplitude;
+              value += (noise.GetNoise (pX, pY) + 1) / 2 * amplitude;
               divider += amplitude;
 
               frequency *= Octaves[i].lacunarity;
