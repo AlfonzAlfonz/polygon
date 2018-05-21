@@ -146,7 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a29daf45b960040c286b5e453f7d53d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
   frequency: 5
   returnType: 0
   distanceFunction: 2
@@ -195,7 +194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a29daf45b960040c286b5e453f7d53d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
   frequency: 5
   returnType: 5
   distanceFunction: 0
@@ -230,7 +228,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8992ad812084720a04114186d6e043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
   octaves:
   - offset: {x: 0, y: 0}
     frequency: 200
@@ -266,6 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 512
   height: 512
+  offset: {x: 0, y: 0}
   function: {fileID: 231151877}
 --- !u!1 &1565051126
 GameObject:

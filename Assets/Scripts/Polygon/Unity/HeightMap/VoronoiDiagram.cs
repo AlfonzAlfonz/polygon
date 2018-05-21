@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Polygon.Unity.HeightMap {
   public class VoronoiDiagram : HeightMapFunction {
-    public Vector2 offset;
 
     public float frequency;
 
@@ -13,7 +12,7 @@ namespace Polygon.Unity.HeightMap {
 
     public FastNoise.CellularDistanceFunction distanceFunction;
 
-    public override float[, ] GetHeightMap (int width, int height) {
+    public override float[, ] GetHeightMap (int width, int height, Vector2 offset) {
       var noise = new Voronoi (frequency, returnType, distanceFunction);
 
       return noise.HeigthMap (width, height, offset);

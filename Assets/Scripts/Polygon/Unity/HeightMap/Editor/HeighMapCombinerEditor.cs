@@ -1,3 +1,4 @@
+using System.Linq;
 using Polygon.Unity.HeightMap;
 using Polygon.Unity.HeightMap.Model;
 using UnityEditor;
@@ -20,22 +21,24 @@ namespace Polygon.Unity.Editor {
 
       toggleMixer = EditorGUILayout.Foldout (toggleMixer, "Mixer");
       if (toggleMixer) {
-        foreach (var f in display.functions) {
-          if (!display.FunctionOptions.ContainsKey (f)) {
-            display.FunctionOptions.Add (f, new HeightMapFunctionOptions ());
-          }
-          EditorGUILayout.BeginHorizontal ();
-          EditorGUILayout.LabelField (f.GetType ().Name.ToString ());
-
-          var value = EditorGUILayout.Slider (display.FunctionOptions[f].opacity, 0, 1);
-          if (value != display.FunctionOptions[f].opacity) {
-            EditorUtility.SetDirty (this.serializedObject.targetObject);
-          }
-          display.FunctionOptions[f].opacity = value;
-
-          EditorGUILayout.EndHorizontal ();
+        MixerField("Master", display.Master);
+        foreach (var pair in display.FunctionOptions) {
+          MixerField (pair.function.GetType ().Name, pair.options);
         }
       }
+    }
+
+    private void MixerField (string name, HeightMapFunctionOptions options) {
+      EditorGUILayout.BeginHorizontal ();
+      EditorGUILayout.LabelField (name);
+
+      var value = EditorGUILayout.Slider (options.opacity, 0, 1);
+      if (value != options.opacity) {
+        EditorUtility.SetDirty (this.serializedObject.targetObject);
+      }
+      options.opacity = value;
+
+      EditorGUILayout.EndHorizontal ();
     }
   }
 }

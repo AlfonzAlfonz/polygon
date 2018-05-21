@@ -8,6 +8,7 @@ using Polygon.Noise;
 using Polygon.Terrain;
 using Polygon.Terrain.Model;
 using Polygon.Unity;
+using Polygon.Unity.HeightMap.Model;
 using UnityEngine;
 
 public class MeshTerrain : MonoBehaviour {
@@ -19,26 +20,7 @@ public class MeshTerrain : MonoBehaviour {
 
   public Material material;
 
-  public Mesh mesh;
-
-  Octave[] octaves = new Octave[] {
-    new Octave () {
-    offset = new Vector2 (),
-    frequency = 1f / 1000f,
-    amplitude = 3f,
-    suboctaves = 4,
-    persistance = 1.3f,
-    lacunarity = 1.6f
-    },
-    new Octave () {
-    offset = new Vector2 (),
-    frequency = 2f / 100f,
-    amplitude = 5f,
-    suboctaves = 4,
-    persistance = 1.3f,
-    lacunarity = 1.6f
-    }
-  };
+  public HeightMapFunction function;
 
   MeshRenderer meshR;
   DependencyContainer container;
@@ -49,9 +31,8 @@ public class MeshTerrain : MonoBehaviour {
   GameObjectGenerator gameObjectGenerator;
 
   void Awake () {
-    generator = new ChunkGenerator(new QuadMapper(), new Noise(octaves));
+    generator = new ChunkGenerator(new QuadMapper(), function);
     gameObjectGenerator = new GameObjectGenerator(new PlaneMeshGenerator(scale), this.transform, material);
-    gameObjectGenerator.mesh = mesh;
     map = new Map(grid, 20, generator, gameObjectGenerator);
     map.player = player;
   }

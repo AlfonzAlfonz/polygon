@@ -10,26 +10,44 @@ namespace Polygon.Unity.HeightMap {
 
     public HeightMapFunction[] functions;
 
-    private Dictionary<HeightMapFunction, HeightMapFunctionOptions> functionOptions;
-    public Dictionary<HeightMapFunction, HeightMapFunctionOptions> FunctionOptions {
+    [SerializeField]
+    [HideInInspector]
+    private HeightMapFunctionOptions master;
+    public HeightMapFunctionOptions Master {
       get {
-        functionOptions = functionOptions ?? new Dictionary<HeightMapFunction, HeightMapFunctionOptions> ();
+        master = master ?? new HeightMapFunctionOptions () {
+          opacity = 1
+        };
+        return master;
+      }
+    }
+
+    [SerializeField]
+    [HideInInspector]
+    private HeightMapFunctionOptionsPair[] functionOptions;
+    public HeightMapFunctionOptionsPair[] FunctionOptions {
+      get {
+        UpdateOptions ();
         return functionOptions;
       }
     }
 
-    public override float[, ] GetHeightMap (int width, int height) => GetCombinedHeightMap (width, height);
+    public override float[, ] GetHeightMap (int width, int height, Vector2 offset) => GetCombinedHeightMap (width, height, offset);
 
-    public float[, ] GetCombinedHeightMap (int w, int h) {
+    public float[, ] GetCombinedHeightMap (int w, int h, Vector2 offset) {
       float[, ] map = new float[w, h];
 
-      float sum = functionOptions.Sum (x => x.Value.opacity);
+      UpdateOptions ();
 
-      foreach (HeightMapFunction func in functions) {
-        var hm = func.GetHeightMap (w, h);
-        for (int x = 0; x < w; x++) {
-          for (int y = 0; y < h; y++) {
-            map[x, y] += hm[x, y] * functionOptions[func].opacity / sum;
+      float sum = functionOptions.Sum (x => x.options.opacity);
+
+      if (sum > 0) {
+        foreach (var pair in functionOptions) {
+          var hm = pair.function.GetHeightMap (w, h, offset);
+          for (int x = 0; x < w; x++) {
+            for (int y = 0; y < h; y++) {
+              map[x, y] += hm[x, y] * pair.options.opacity / sum * Master.opacity;
+            }
           }
         }
       }
@@ -38,9 +56,21 @@ namespace Polygon.Unity.HeightMap {
     }
 
     void OnValidate () {
-      foreach (var f in functions) {
-        if (!functionOptions.ContainsKey (f)) {
-          functionOptions.Add (f, new HeightMapFunctionOptions ());
+      UpdateOptions ();
+    }
+
+    public void UpdateOptions () {
+      if (functionOptions == null || functions.Length != functionOptions.Length) {
+        functionOptions = new HeightMapFunctionOptionsPair[functions.Length];
+      }
+
+      for (int i = 0; i < functions.Length; i++) {
+        var f = functions[i];
+        if (functionOptions[i] == null || functionOptions[i].function != f) {
+          functionOptions[i] = new HeightMapFunctionOptionsPair () {
+          function = f,
+          options = new HeightMapFunctionOptions ()
+          };
         }
       }
     }

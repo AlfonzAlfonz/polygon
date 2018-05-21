@@ -5,6 +5,8 @@ namespace Polygon.Unity.HeightMap {
   public class HeightMapDisplay : MonoBehaviour {
     public int width;
     public int height;
+
+    public Vector2 offset;
     Texture2D texture;
     public Texture2D Texture {
       get {
@@ -31,7 +33,7 @@ namespace Polygon.Unity.HeightMap {
       var w = width ?? this.width;
       var h = height ?? this.height;
 
-      texture.SetPixels (function.GetHeightMap (w, h).ToHeightMapTexture ());
+      texture.SetPixels (function.GetHeightMap (w, h, offset).ToHeightMapTexture ());
       texture.Apply ();
     }
   }

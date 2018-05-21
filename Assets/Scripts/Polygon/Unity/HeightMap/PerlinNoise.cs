@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Polygon.Unity.HeightMap {
   public class PerlinNoise : HeightMapFunction {
-    public Vector2 offset;
 
     public List<Octave> octaves;
 
@@ -30,7 +29,7 @@ namespace Polygon.Unity.HeightMap {
       };
     }
 
-    public override float[, ] GetHeightMap (int width, int height) {
+    public override float[, ] GetHeightMap (int width, int height, Vector2 offset) {
 
       Noise.Noise noise = new Noise.Noise (octaves.ToArray ());
       return noise.PerlinNoise (width, height, offset);

@@ -9,8 +9,6 @@ namespace Polygon.Unity {
 
     Material material;
 
-    public UnityEngine.Mesh mesh;
-
     public GameObjectGenerator (PlaneMeshGenerator meshGenerator, Transform root, Material material) {
       this.meshGenerator = meshGenerator;
       this.root = root;
